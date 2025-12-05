@@ -1,0 +1,18 @@
+#include<iostream>
+#include"utility.h"
+using namespace std;
+bool IsPrime(int x){
+    bool prime = true;
+   for(int i=2; i<=x/i; i++){
+    int factor=x/i;
+    if(factor*i==x){
+        cout<<"factor found: "<<i<<"*"<<factor<<endl;
+        prime=false;
+        break;
+    }
+    }
+    return prime;
+}
+bool Is2MorePrime(int const& x){
+    return IsPrime(x+2);
+}

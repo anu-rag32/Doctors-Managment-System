@@ -1,0 +1,13 @@
+set ORACLE_SID=orcl
+
+sqlplus /as sysdba
+
+ALTER SESSION SET CONTAINER ORACLEPDB;
+
+CREATE USER c##sonu IDENTIFIED BY "pass@1234";
+
+GRANT CONNECT, RESOURCE TO c##sonu;
+
+GRANT CREATE SESSION TO c##sonu;
+
+
