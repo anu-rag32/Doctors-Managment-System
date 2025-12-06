@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Doctrack Hospital</title> 
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+
+    header {
+      background-color: #3b55e7; /* dark blue */
+      padding: 20px 0;
+      text-align: center;
+      color: white; /* text color */
+    }
+
+    header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: white; /* ensures h1 is white */
+    }
+
+    .contact-container {
+      background: white;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .contact-container h2 {
+      text-align: center;
+      color: #3b68e6;
+      margin-bottom: 4px;
+      font-size: 24px;
+    }
+
+    .tagline {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .contact-item {
+      margin-bottom: 14px;
+      font-size: 16px;
+      background: #f8f9fa;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    .contact-item:hover {
+      background: #eef2ff;
+      transform: scale(1.02);
+    }
+
+    .contact-item strong {
+      color: #333;
+      display: inline-block;
+      width: 190px;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: #ccc;
+      margin: 30px 0;
+    }
+
+    .leadership {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    /* Updated small image */
+    .leadership img {
+      width: 60px;       /* smaller width */
+      height: 60px;      /* smaller height */
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #1d4ed8;
+      margin-bottom: 10px;
+    }
+
+    .leadership h3 {
+      margin: 2px 0 1px;
+      font-size: 18px;
+      color: #111827;
+    }
+
+    .leadership p {
+      font-size: 14px;
+      color: #555;
+      margin: 0;
+    }
+
+    .map {
+      margin-top: 25px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      height: 250px;
+      border: none;
+    }
+
+    @media (max-width: 480px) {
+      .contact-item strong {
+        width: 100%;
+        display: block;
+        margin-bottom: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Contact Us</h1>
+  </header>
+
+  <div class="contact-container">
+    <h2>🏥 Hospital Contact Information</h2>
+    <p class="tagline">Your Health, Our Mission</p>
+
+    <div class="contact-item">
+      <strong>🏥 Hospital Name:</strong> Doctrack Multispeciality Hospital
+    </div>
+
+    <div class="contact-item">
+      <strong>📍 Address:</strong> Sikandarpur, Maner, Patna
+    </div>
+
+    <div class="contact-item">
+      <strong>📞 Reception Phone:</strong> <a href="tel:+919876543210">+91-9876543210</a>
+    </div>
+
+    <div class="contact-item">
+      <strong>🚨 Emergency Phone:</strong> <a href="tel:+919111223344">+91-9111223344</a>
+    </div>
+
+    <div class="contact-item">
+      <strong>🚑 Ambulance:</strong> <a href="tel:+918008800880">+91-8008800880</a>
+    </div>
+
+    <div class="contact-item">
+      <strong>📧 Email (General):</strong> <a href="mailto:info@doctrack.com">info@doctrack.com</a>
+    </div>
+
+    <div class="contact-item">
+      <strong>📅 Email (Appointments):</strong> <a href="mailto:appointments@doctrack.com">appointments@doctrack.com</a>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="leadership">
+      <img src="eren.jpg" alt="Eren Image">
+      <h3>Mr. Eren Yeager</h3>
+      <p>Founder & CEO, Doctrack Hospital</p>
+      <p style="margin-top: 5px;">“We are committed to bringing healthcare to every home.”</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="map">
+      <iframe 
+        src="https://www.google.com/maps?q=Sikandarpur+Maner+Patna&output=embed"
+        allowfullscreen=""
+        loading="lazy"
+        title="Doctrack Hospital Location">
+      </iframe>
+    </div>
+  </div>
+</body>
+</html>
