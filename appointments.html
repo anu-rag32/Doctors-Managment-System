@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Appointment Form</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1 style="color: white;">Book a Doctor Appointment</h1>
+  </header>
+
+  <form id="appointmentForm">
+    <label for="name">Patient Full Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label>Gender</label>
+    <div class="gender-group">
+      <label><input type="radio" name="gender" value="Male" required> Male</label>
+      <label><input type="radio" name="gender" value="Female"> Female</label>
+      <label><input type="radio" name="gender" value="Other"> Other</label>
+    </div>
+
+    <label for="dob">Age / Date of Birth</label>
+    <input type="date" id="dob" name="dob" required>
+
+    <label for="mobile">Mobile Number</label>
+    <input type="tel" id="mobile" name="mobile" required pattern="[0-9]{10}" placeholder="10-digit number">
+
+    <label for="email">Email Address (Optional)</label>
+    <input type="email" id="email" name="email">
+
+    <label for="address">Address (Optional)</label>
+    <textarea id="address" name="address" rows="2" placeholder="Street, City, Pincode"></textarea>
+
+    <label for="department">Department / Specialization</label>
+    <select id="department" name="department" required>
+      <option value="">-- Select Department --</option>
+      <option value="Cardiology">Cardiology</option>
+      <option value="Dermatology">Dermatology</option>
+      <option value="Neurology">Neurology</option>
+      <option value="Orthopedics">Orthopedics</option>
+      <option value="Pediatrics">Pediatrics</option>
+      <option value="Gynecology">Gynecology</option>
+    </select>
+
+    <label for="doctor">Select Doctor</label>
+    <select id="doctor" name="doctor" required>
+      <option value="">-- Select Doctor --</option>
+    </select>
+
+    <label for="date">Appointment Date</label>
+    <input type="date" id="date" name="date" required>
+
+    <label for="time">Time Slot</label>
+    <select id="time" name="time" required>
+      <option value="">-- Select Time --</option>
+      <option>10:00 AM – 10:15 AM</option>
+      <option>10:30 AM – 10:45 AM</option>
+      <option>11:00 AM – 11:15 AM</option>
+      <option>2:00 PM – 2:15 PM</option>
+      <option>3:00 PM – 3:15 PM</option>
+    </select>
+
+    <label for="mode">Mode of Appointment</label>
+    <select id="mode" name="mode" required>
+      <option value="">-- Select Mode --</option>
+      <option>In-person</option>
+      <option>Online</option>
+      <option>Home Visit</option>
+    </select>
+
+    <button type="submit">📅 Submit Appointment</button>
+  </form>
+
+  <div class="message" id="message"></div>
+
+  <!-- JavaScript -->
+  <script>
+    const departmentSelect = document.getElementById('department');
+    const doctorSelect = document.getElementById('doctor');
+    const messageDiv = document.getElementById('message');
+
+    const doctorsByDept = {
+      Cardiology: ["Dr. Amar", "Dr. Rakesh", "Dr. Anurag Kr", "Dr. Kunal Singh"],
+      Dermatology: ["Dr. Sonu Kumar", "Dr. Khushi Gupta"],
+      Neurology: ["Dr. Karan", "Dr. Kanak", "Dr. Anuj"],
+      Orthopedics: ["Dr. Utkarsh", "Dr. Kavita", "Dr. Anshika"],
+      Pediatrics: ["Dr. Priyanka", "Dr. Prashant", "Dr. Meena"],
+      Gynecology: ["Dr. Supriya Kumari", "Dr. Komal Raj", "Dr. Poemkavi"]
+    };
+
+    departmentSelect.addEventListener('change', function () {
+      const selectedDept = this.value;
+      doctorSelect.innerHTML = `<option value="">-- Select Doctor --</option>`;
+      if (doctorsByDept[selectedDept]) {
+        doctorsByDept[selectedDept].forEach(doc => {
+          const option = document.createElement('option');
+          option.value = doc;
+          option.textContent = doc;
+          doctorSelect.appendChild(option);
+        });
+      }
+    });
+
+    document.getElementById("appointmentForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const otp = Math.floor(100000 + Math.random() * 900000);
+      const userOtp = prompt(`An OTP has been sent to your mobile.\nEnter OTP to confirm booking:\n(Your OTP: ${otp})`);
+
+      if (userOtp == otp) {
+        messageDiv.innerHTML = "<p style='color:green;'>✅ Appointment confirmed successfully!</p>";
+
+        const form = e.target;
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const details = {
+          Name: form.name.value,
+          Gender: form.gender.value,
+          DOB: form.dob.value,
+          Mobile: form.mobile.value,
+          Email: form.email.value || "N/A",
+          Address: form.address.value || "N/A",
+          Department: form.department.value,
+          Doctor: form.doctor.value,
+          Date: form.date.value,
+          Time: form.time.value,
+          Mode: form.mode.value
+        };
+
+        // === PDF HEADER ===
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text("Doctraq Hospital", 20, 20); // ✅ Updated name
+
+        // Optional logo (commented)
+        // const logo = new Image();
+        // logo.src = 'your_logo_url_or_base64';
+        // doc.addImage(logo, 'PNG', 150, 10, 40, 20);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(150);
+        doc.text("Doctor Appointment Confirmation", 20, 28);
+        doc.setDrawColor(200);
+        doc.line(20, 30, 190, 30);
+
+        let y = 40;
+
+        // === SECTION 1 ===
+        doc.setTextColor(0);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text("👤 Patient Information", 20, y);
+        y += 8;
+
+        doc.setDrawColor(220);
+        doc.rect(18, y - 6, 174, 55);
+        y += 4;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        Object.entries(details).slice(0, 6).forEach(([key, value]) => {
+          doc.text(`${key}: ${value}`, 25, y);
+          y += 8;
+        });
+
+        y += 10;
+
+        // === SECTION 2 ===
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text("📅 Appointment Details", 20, y);
+        y += 8;
+
+        doc.setDrawColor(220);
+        doc.rect(18, y - 6, 174, 50);
+        y += 4;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        Object.entries(details).slice(6).forEach(([key, value]) => {
+          doc.text(`${key}: ${value}`, 25, y);
+          y += 8;
+        });
+
+        y += 12;
+        doc.setFont("helvetica", "italic");
+        doc.setTextColor(100);
+        doc.text("Please arrive 10 minutes before your scheduled time.", 20, y);
+
+        doc.save(`Appointment_${details.Name.replace(/\s+/g, "_")}.pdf`);
+        form.reset();
+      } else {
+        messageDiv.innerHTML = "<p style='color:red;'>❌ OTP verification failed. Please try again.</p>";
+      }
+    });
+  </script>
+
+</body>
+</html>
