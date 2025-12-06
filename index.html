@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ultra Pro Login Page</title>
+
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-border;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      color: #222;
+      height: 100vh;
+      background: linear-gradient(-45deg, #ffecd2, #fcb69f, #a1c4fd, #c2e9fb);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+      position: relative;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease-out;
+      text-align: center;
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      animation: fadeIn 3s ease-out;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: white;
+      color: #333;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button:hover {
+      background: #ffe3b3;
+      color: #000;
+      box-shadow: 0 0 15px rgba(255, 153, 0, 0.4);
+    }
+
+    .spark {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ff9900;
+      pointer-events: none;
+      animation: explode 0.6s ease-out forwards;
+    }
+
+    @keyframes explode {
+      0% { transform: scale(0.5); opacity: 1; }
+      100% { transform: scale(3); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-area {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 30px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .form-area input {
+      padding: 12px;
+      font-size: 1rem;
+      width: 270px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #222;
+      transition: 0.3s;
+    }
+
+    .form-area input:focus {
+      border-color: #ff9900;
+      outline: none;
+      box-shadow: 0 0 8px rgba(255, 153, 0, 0.3);
+    }
+
+    .form-area button {
+      background-color: #ff9900;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+    }
+
+    .form-area button:hover {
+      background-color: #ffae42;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 id="welcomeText">Welcome, dear user</h1>
+
+    <div class="buttons" id="mainButtons">
+      <button onclick="triggerEffect(event, 'login')">Login</button>
+      <button onclick="triggerEffect(event, 'signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-area" id="loginForm">
+      <input type="text" placeholder="Enter Username" />
+      <input type="password" placeholder="Enter Password" />
+      <button onclick="submitLogin()">Login</button>
+    </div>
+
+    <!-- Signup Form -->
+    <div class="form-area" id="signupForm">
+      <input type="text" placeholder="Full Name" />
+      <input type="email" placeholder="Email Address" />
+      <input type="password" placeholder="Create Password" />
+      <button onclick="submitSignup()">Sign Up</button>
+    </div>
+  </div>
+
+  <script>
+    function triggerEffect(e, type) {
+      // Sparkle Animation
+      for (let i = 0; i < 20; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'spark';
+
+        spark.style.left = `${e.clientX}px`;
+        spark.style.top = `${e.clientY}px`;
+
+        document.body.appendChild(spark);
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 100;
+
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+
+        spark.style.transform = `translate(${x}px, ${y}px)`;
+
+        setTimeout(() => spark.remove(), 600);
+      }
+
+      // Show/Hide Forms
+      document.getElementById("mainButtons").style.display = "none";
+      document.getElementById("signupForm").style.display = "none";
+      document.getElementById("loginForm").style.display = "none";
+
+      if (type === 'login') {
+        document.getElementById("welcomeText").innerText = "Login to continue";
+        document.getElementById("loginForm").style.display = "flex";
+      } else {
+        document.getElementById("welcomeText").innerText = "Create your account";
+        document.getElementById("signupForm").style.display = "flex";
+      }
+    }
+
+    function submitSignup() {
+      alert("Signup successful! Please login now.");
+      document.getElementById("signupForm").style.display = "none";
+      document.getElementById("loginForm").style.display = "flex";
+      document.getElementById("welcomeText").innerText = "Login to continue";
+    }
+
+    function submitLogin() {
+      window.location.href = "home.html";
+    }
+  </script>
+</body>
+</html>
